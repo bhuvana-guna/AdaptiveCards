@@ -30,6 +30,10 @@
 					{
 						"type": "TextBlock",
 						"text": "Hello **Adaptive Cards!**"
+					},
+					{
+						"type": "TextBlock",
+						"text": "This is a -custom markdown- for bullet list $ Item **1**.1\r$ Item -2.2-\r$ Item 3\r "
 					}
 				],
 				"actions": [{
@@ -61,6 +65,25 @@
 			adaptiveCard.onExecuteAction = function (action) {
 				alert("Ow!");
 			}
+
+			adaptiveCard.constructor.setCustomMarkdownRegex([{
+							type: 'bullet', 
+							styles:{
+								start: "<ul>",
+								end: "</ul>"},
+							pattern: ['$', '\\r|\\n'],
+							patternType: 'start-end',
+							groups: 1
+						},
+						{
+							type: 'italic',
+							styles:{
+								start: "<i>",
+								end: "</i>"},
+							pattern: ['-'],
+							patternType: 'symmetric',
+							groups:1,
+						}]);
 
 			// Parse the card payload
 			adaptiveCard.parse(card);
